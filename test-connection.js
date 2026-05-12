@@ -1,13 +1,17 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
-const creds = require('./credentials.json');
+require('dotenv').config();
 
 async function testWriteData() {
     try {
+        const privateKey = process.env.GOOGLE_PRIVATE_KEY 
+            ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
+            : "";
+
         // 1. Setup Auth with write permissions
         const serviceAccountAuth = new JWT({
-            email: creds.client_email,
-            key: creds.private_key,
+            email: process.env.GOOGLE_CLIENT_EMAIL,
+            key: privateKey,
             scopes: ['https://www.googleapis.com/auth/spreadsheets'],
         });
 
