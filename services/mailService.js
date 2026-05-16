@@ -1,21 +1,44 @@
 const nodemailer = require("nodemailer");
 
-const sendConfirmationMail = async (toEmail, name) => {
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    });
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+});
+
+const sendConfirmationMail = async (to, name, enquiryData = null) => {
+
+    let subject = "Booking Confirmation";
+    let html = `
+        <h2>Hello ${name},</h2>
+        <p>Your enquiry has been received successfully.</p>
+    `;
+
+    // If enquiryData exists → admin notification
+    if (enquiryData) {
+        subject = "New Booking Enquiry Received";
+
+        html = `
+            <h2>New Enquiry Received</h2>
+
+            <p><strong>Name:</strong> ${enquiryData.Name}</p>
+            <p><strong>Email:</strong> ${enquiryData.Email}</p>
+            <p><strong>Phone:</strong> ${enquiryData.Phone}</p>
+            <p><strong>Adults:</strong> ${enquiryData.Adults}</p>
+            <p><strong>Children:</strong> ${enquiryData.Children}</p>
+            <p><strong>Checkin:</strong> ${enquiryData.Checkin}</p>
+            <p><strong>Checkout:</strong> ${enquiryData.Checkout}</p>
+            <p><strong>Address:</strong> ${enquiryData.Address}</p>
+        `;
+    }
 
     await transporter.sendMail({
-        from: `"Boche 1000 Acres" <${process.env.EMAIL_USER}>`,
-        to: toEmail,
-        subject: "Enquiry Received",
-        html: `<h3>Hello ${name}, we received your enquiry.</h3>`,
+        from: process.env.EMAIL_USER,
+        to,
+        subject,
+        html,
     });
 };
 

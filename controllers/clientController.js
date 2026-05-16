@@ -6,7 +6,7 @@ const submitForm = async (req, res) => {
     try {
         const formData = req.body;
 
-        const privateKey = process.env.GOOGLE_PRIVATE_KEY 
+        const privateKey = process.env.GOOGLE_PRIVATE_KEY
             ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
             : "";
 
@@ -78,6 +78,11 @@ const submitForm = async (req, res) => {
         if (finalData.Email) {
             await sendConfirmationMail(finalData.Email, finalData.Name);
         }
+        await sendConfirmationMail(
+            process.env.EMAIL_USER,
+            "Admin",
+            finalData
+        );
 
         res.status(200).json({
             success: true,
