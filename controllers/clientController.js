@@ -6,13 +6,13 @@ const submitForm = async (req, res) => {
     try {
         const formData = req.body;
 
-        const privateKey = process.env.GOOGLE_PRIVATE_KEY
-            ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
-            : "";
+        const credentials = JSON.parse(
+            Buffer.from(process.env.GOOGLE_CREDENTIALS_BASE64, 'base64').toString('utf8')
+        );
 
         const serviceAccountAuth = new JWT({
-            email: process.env.GOOGLE_CLIENT_EMAIL,
-            key: privateKey,
+            email: credentials.client_email,
+            key: credentials.private_key,
             scopes: ['https://www.googleapis.com/auth/spreadsheets'],
         });
 
