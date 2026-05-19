@@ -24,5 +24,15 @@ app.get("/health", (req, res) => {
    });
 });
 
+app.get("/debug", (req, res) => {
+    res.json({
+        hasEmail: !!process.env.GOOGLE_CLIENT_EMAIL,
+        hasKey: !!process.env.GOOGLE_PRIVATE_KEY,
+        keyLength: process.env.GOOGLE_PRIVATE_KEY?.length || 0,
+        emailUser: !!process.env.EMAIL_USER,
+        emailPass: !!process.env.EMAIL_PASS,
+    });
+});
+
 app.use("/", userRoutes)
 module.exports = app;
