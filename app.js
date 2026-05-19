@@ -1,15 +1,28 @@
-const express= require("express")
-const cors= require("cors")
+const express = require("express")
+const cors = require("cors")
 require("dotenv").config()
-const userRoutes= require("./routes/clientRoutes") 
+const userRoutes = require("./routes/clientRoutes")
 
-const app= express();
-app.use(cors())
-app.use(express.json()) 
+const app = express();
+app.use(cors({
+   origin: [
+      "https://boche1000acre.in",
+      "https://www.boche1000acre.in"
+   ],
+   methods: ["GET", "POST"],
+   credentials: true
+}))
+app.use(express.json())
 
 app.get("/", (req, res) => {
    res.send("Server running");
 });
 
-app.use("/",userRoutes) 
+app.get("/health", (req, res) => {
+   res.json({
+      success: true
+   });
+});
+
+app.use("/", userRoutes)
 module.exports = app;

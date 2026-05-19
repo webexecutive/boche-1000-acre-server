@@ -4,7 +4,7 @@ require('dotenv').config();
 
 async function testWriteData() {
     try {
-        const privateKey = process.env.GOOGLE_PRIVATE_KEY 
+        const privateKey = process.env.GOOGLE_PRIVATE_KEY
             ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
             : "";
 
@@ -33,7 +33,7 @@ async function testWriteData() {
         await sheet.addRow(testData);
 
         console.log("✅ Success! Check your Google Sheet now.");
-        
+
     } catch (error) {
         console.error("❌ Write Test Failed!");
         if (error.message.includes('403')) {
