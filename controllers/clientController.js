@@ -96,7 +96,7 @@ const submitForm = async (req, res) => {
     res.status(500).json({
         success: false,
         message: "Failed to submit form",
-        error: error.message,  // ← add this temporarily
+        error: error.message
     });
 }
 };
