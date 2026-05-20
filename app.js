@@ -83,5 +83,25 @@ app.get("/test-sheets", async (req, res) => {
    }
 });
 
+app.get("/test-email", async (req, res) => {
+    try {
+        const sendConfirmationMail = require("../services/mailService");
+        await sendConfirmationMail(
+            process.env.EMAIL_USER,
+            "Test",
+            null
+        );
+        res.json({
+            success: true,
+            message: "Email sent successfully",
+        });
+    } catch (error) {
+        res.json({
+            success: false,
+            error: error.message,
+        });
+    }
+});
+
 app.use("/", userRoutes)
 module.exports = app;
