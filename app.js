@@ -85,7 +85,7 @@ app.get("/test-sheets", async (req, res) => {
 
 app.get("/test-email", async (req, res) => {
     try {
-        const sendConfirmationMail = require("../services/mailService");
+        const sendConfirmationMail = require("./services/mailService");
         await sendConfirmationMail(
             process.env.EMAIL_USER,
             "Test",
