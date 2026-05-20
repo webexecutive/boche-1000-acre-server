@@ -90,15 +90,13 @@ const submitForm = async (req, res) => {
         });
 
     } catch (error) {
-    console.error("❌ Error name:", error.name);
-    console.error("❌ Error message:", error.message);
-    console.error("❌ Full error:", error);
-    res.status(500).json({
-        success: false,
-        message: "Failed to submit form",
-        error: error.message
-    });
+        console.error("❌ Error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to submit form",
+            error: error.message,
+        });
+    }
 }
-};
 
 module.exports = { submitForm };
