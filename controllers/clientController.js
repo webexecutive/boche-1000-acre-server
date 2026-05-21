@@ -1,6 +1,10 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
-const sendConfirmationMail = require("../services/mailService");
+const {
+    sendEnquiryConfirmationToClient,
+    sendEnquiryDetailsToAdmin,
+    sendContactMailToAdmin,
+} = require("../services/mailService");
 
 const submitForm = async (req, res) => {
     try {
@@ -16,10 +20,7 @@ const submitForm = async (req, res) => {
             scopes: ['https://www.googleapis.com/auth/spreadsheets'],
         });
 
-        const doc = new GoogleSpreadsheet(
-            '1kitHHSFSkaF1__QrnR0lrAR8b1ZXL47vt3wHY7WeGUU',
-            serviceAccountAuth
-        );
+        const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, serviceAccountAuth);
 
         await doc.loadInfo();
         const sheet = doc.sheetsByIndex[0];
@@ -74,15 +75,13 @@ const submitForm = async (req, res) => {
 
         await sheet.addRow(finalData);
 
-        // 📧 Send confirmation email
+        // 📧 Send confirmation to client
         if (finalData.Email) {
-            await sendConfirmationMail(finalData.Email, finalData.Name);
+            await sendEnquiryConfirmationToClient(finalData.Email, finalData.Name);
         }
-        await sendConfirmationMail(
-            process.env.EMAIL_USER,
-            "Admin",
-            finalData
-        );
+
+        // 📧 Send enquiry details to admin
+        await sendEnquiryDetailsToAdmin(finalData);
 
         res.status(200).json({
             success: true,
@@ -97,6 +96,35 @@ const submitForm = async (req, res) => {
             error: error.message,
         });
     }
-}
+};
 
-module.exports = { submitForm };
+const submitContactForm = async (req, res) => {
+    try {
+        const { email, subject, message } = req.body;
+
+        if (!email || !subject || !message) {
+            return res.status(400).json({
+                success: false,
+                message: "Email, subject and message are required.",
+            });
+        }
+
+        // 📧 Send contact message to admin
+        await sendContactMailToAdmin({ email, subject, message });
+
+        res.status(200).json({
+            success: true,
+            message: "Message sent successfully.",
+        });
+
+    } catch (error) {
+        console.error("❌ Contact form error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to send message.",
+            error: error.message,
+        });
+    }
+};
+
+module.exports = { submitForm, submitContactForm };
