@@ -14,8 +14,6 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "loaded" : "MISSING");
 
 // ── 1. Confirmation to client — "We received your enquiry" ──
 const sendEnquiryConfirmationToClient = async (to, name) => {

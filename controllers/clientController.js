@@ -127,4 +127,58 @@ const submitContactForm = async (req, res) => {
     }
 };
 
-module.exports = { submitForm, submitContactForm };
+const submitSubscriber = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: "Email is required.",
+            });
+        }
+
+        const credentials = JSON.parse(
+            Buffer.from(process.env.GOOGLE_CREDENTIALS_BASE64, 'base64').toString('utf8')
+        );
+
+        const serviceAccountAuth = new JWT({
+            email: credentials.client_email,
+            key: credentials.private_key,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+
+        const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, serviceAccountAuth);
+
+        await doc.loadInfo();
+        const sheet = doc.sheetsByIndex[1];
+
+        // Check if email already exists
+        const rows = await sheet.getRows();
+        const alreadyExists = rows.some(row => row.get("Email") === email);
+
+        if (alreadyExists) {
+            return res.status(409).json({
+                success: false,
+                message: "This email is already subscribed.",
+            });
+        }
+
+        await sheet.addRow({ Email: email });
+
+        res.status(200).json({
+            success: true,
+            message: "Subscribed successfully.",
+        });
+
+    } catch (error) {
+        console.error("Subscriber error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to subscribe.",
+            error: error.message,
+        });
+    }
+};
+
+module.exports = { submitForm, submitContactForm, submitSubscriber };
