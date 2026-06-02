@@ -56,7 +56,7 @@ const sendEnquiryConfirmationToClient = async (to, name) => {
                 <h3 style="margin-top:0;color:#3a5a1c;">Need immediate assistance?</h3>
                 <p style="margin:8px 0;">📞 <strong>Reception:</strong> +91 70340 48884</p>
                 <p style="margin:8px 0;">📞 <strong>Reception:</strong> +91 80860 04747</p>
-                <p style="margin:8px 0;">📧 <strong>Email:</strong> boche1000acre@gmail.com</p>
+                <p style="margin:8px 0;">📧 <strong>Email:</strong> booking@bochehg.com</p>
                 <p style="margin:8px 0;">📍 <strong>Address:</strong> Chulika Estate, Cottappadi P O, Vythiri, Meppadi, Kerala 673577</p>
             </div>
 
