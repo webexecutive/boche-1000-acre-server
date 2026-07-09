@@ -28,7 +28,7 @@ const sendEnquiryConfirmationToClient = async (to, name) => {
 
         <!-- Logo -->
         <div style="text-align:center;padding:32px 0 16px;">
-            <img src="https://boche1000acre.in/logos/mail.webp" alt="Boche 1000 Acre" width="300px" />
+            <img src="https://boche1000acre.com/logos/mail.webp" alt="Boche 1000 Acre" width="300px" />
         </div>
 
         <!-- Header Banner -->

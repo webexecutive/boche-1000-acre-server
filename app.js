@@ -8,8 +8,8 @@ app.use(cors({
    origin: [
       "http://localhost:5173",
       "http://localhost:3000",
-      "https://boche1000acre.in",
-      "https://www.boche1000acre.in"
+      "https://boche1000acre.com",
+      "https://www.boche1000acre.com"
    ],
    methods: ["GET", "POST"],
    credentials: true
