@@ -57,7 +57,7 @@ const sendEnquiryConfirmationToClient = async (to, name) => {
                 <p style="margin:8px 0;">📞 <strong>Reception:</strong> +91 70340 48884</p>
                 <p style="margin:8px 0;">📞 <strong>Reception:</strong> +91 80860 04747</p>
                 <p style="margin:8px 0;">📧 <strong>Email:</strong> booking@bochehg.com</p>
-                <p style="margin:8px 0;">📍 <strong>Address:</strong> Chulika Estate, Cottappadi P O, Vythiri, Meppadi, Kerala 673577</p>
+                <p style="margin:8px 0;">📍 <strong>Address:</strong> boCHE 1000 Acre, boCHE Junction, Meppadi, Wayanad, Kerala 673577</p>
             </div>
 
             <p>Warm regards,<br/><strong>Boche 1000 Acre Team</strong></p>
@@ -66,7 +66,7 @@ const sendEnquiryConfirmationToClient = async (to, name) => {
         <!-- Footer -->
         <div style="text-align:center;padding:16px;font-size:12px;color:#999;">
             <p>© 2025 Boche 1000 Acre. All rights reserved.</p>
-            <p>Chulika Estate, Vythiri, Meppadi, Kerala 673577</p>
+            <p>boCHE 1000 Acre, boCHE Junction, Meppadi, Wayanad, Kerala 673577</p>
         </div>
 
     </div>
