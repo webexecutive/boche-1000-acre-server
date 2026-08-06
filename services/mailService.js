@@ -148,7 +148,7 @@ const sendContactMailToAdmin = async ({ email, subject, message }) => {
                     ${message.replace(/\n/g, "<br/>")}
                 </div>
                 <hr/>
-                <p style="font-size:12px;color:#999;">Sent via Chulika Estate contact form</p>
+                <p style="font-size:12px;color:#999;">Sent via boCHE 1000 Acre contact form</p>
             `,
         });
         console.log("✅ Contact mail sent to admin");
